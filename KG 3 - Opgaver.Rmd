@@ -32,21 +32,19 @@ printfln <- function(...) cat(sprintf(...), "\n")
 
 steepest_descent <- function(f, g, x_k, a, c, r, tol, k_max) {
 	k <- 0
-	#x_change <- abs(tol) + 1
 	g_k <- abs(tol) + 1 # to get started
 	while ((abs(g_k) > tol) && (k < k_max)) {
 		f_k <- f(x_k)
-		points(x_k, f_k)
+		points(x_k, f_k)  # Udelukkende visuelt
 		g_k <- g(x_k)
 		p_k <- -g_k # steepest descent direction
 		a_k <- backtracking_line_search(a, c, r, x_k, p_k, g_k, f_k, f)
-		#a_k <- 1
-		x_old <- x_k
+		x_old <- x_k # Udelukkende visuelt
 		x_k <- x_k + a_k * p_k
-		lines(c(x_old, x_k), c(f(x_old), f(x_k)), col = "red")
+		lines(c(x_old, x_k), c(f(x_old), f(x_k)), col = "red") # Udelukkende visuelt
 		
 		k <- k + 1
-		printfln("k = %d \t x_k = %.22f \t f_k = %f \t g_k = %f \t a_k = %f", k, x_k, f_k, g_k, a_k)
+		printfln("k = %d \t x_k = %.22f \t f_k = %f \t g_k = %f \t a_k = %f", k, x_k, f_k, g_k, a_k) # Udelukkende visuelt
 	}
 	return(x_k)
 }
@@ -71,7 +69,7 @@ x_solution
 ```
 
 * Make sure that the implementation supports the different step sizes we have discussed (fixed, backtracking and satisfying strong Wolfe conditions)
-    + Discuss in the group how this can be done in practise (including identifing problems that you don't know how to solve technically)
+    + Discuss in the group how this can be done in practice (including identifying problems that you don't know how to solve technically)
 * Discuss when to terminate the algorithm
 * Your implementation must return both $x^*$ and the path ($\{x_k\}_k$) [Hint in pseudo code: `return(list(x = ..., path = ...))`]
     + Why? Use the information.
