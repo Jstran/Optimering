@@ -1,0 +1,33 @@
+---
+title: "Optimisation: Exercises 3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Gradient descent and step size
+
+* Make sure that you have a working implementation of the gradient descent algorithm taking as arguments the objective function ($f$) and its gradient ($g = \nabla f$), and possibly other parameters
+* Make sure that the implementation supports the different step sizes we have discussed (fixed, backtracking and satisfying strong Wolfe conditions)
+    + Discuss in the group how this can be done in practise (including identifing problems that you don't know how to solve technically)
+* Discuss when to terminate the algorithm
+* Your implementation must return both $x^*$ and the path ($\{x_k\}_k$) [Hint in pseudo code: `return(list(x = ..., path = ...))`]
+    + Why? Use the information.
+
+# Newton's method
+
+Implement Newton's method, including using different step sizes (see above). Discuss what is needed as argument in addition to your implementation of gradient descent. Your implementation must return both $x^*$ and the iterates ($\{x_k\}_k$).
+
+# Comparing the methods
+
+* Look at the [Rosenbrock function](https://en.wikipedia.org/wiki/Rosenbrock_function)
+* Plot it for some values of $a$ and $b$
+    + Discuss how to plot this function to get an impression of it
+* Compare the methods mentioned above (gradient descent and Newton's method) for a few different choices of the Rosenbrock function ($a$ and $b$ parameters) as well as different step sizes algorithms and starting values
+
+# Zoutendijk's theorem
+
+Discuss Theorem 3.2 (Zoutendijk) and work through the proof (possibly fill in details).
