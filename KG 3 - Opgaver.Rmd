@@ -11,6 +11,65 @@ knitr::opts_chunk$set(echo = TRUE)
 # Gradient descent and step size
 
 * Make sure that you have a working implementation of the gradient descent algorithm taking as arguments the objective function ($f$) and its gradient ($g = \nabla f$), and possibly other parameters
+
+```{r}
+backtracking_line_search <- function(a, c, r, x_k, p_k, g_k, f_k, f) {
+	a_k <- a
+	repeat {
+		x_candidate <- x_k + a_k * p_k
+		lhs <- f(x_candidate)
+		rhs <- f_k + c * a_k * g_k * p_k
+		if (lhs <= rhs) break
+		a_k <- r * a_k
+	}
+	return(a_k)
+}
+
+printf <- function(...) cat(sprintf(...))
+printfln <- function(...) cat(sprintf(...), "\n")
+
+# stopping criteria?
+
+steepest_descent <- function(f, g, x_k, a, c, r, tol, k_max) {
+	k <- 0
+	#x_change <- abs(tol) + 1
+	g_k <- abs(tol) + 1 # to get started
+	while ((abs(g_k) > tol) && (k < k_max)) {
+		f_k <- f(x_k)
+		points(x_k, f_k)
+		g_k <- g(x_k)
+		p_k <- -g_k # steepest descent direction
+		a_k <- backtracking_line_search(a, c, r, x_k, p_k, g_k, f_k, f)
+		#a_k <- 1
+		x_old <- x_k
+		x_k <- x_k + a_k * p_k
+		lines(c(x_old, x_k), c(f(x_old), f(x_k)), col = "red")
+		
+		k <- k + 1
+		printfln("k = %d \t x_k = %.22f \t f_k = %f \t g_k = %f \t a_k = %f", k, x_k, f_k, g_k, a_k)
+	}
+	return(x_k)
+}
+
+```
+
+```{r}
+# configuration
+a <- 1    # initial step-length
+c <- 1e-4 # Sufficient Decrease Condition (SDC) Strength
+r <- 0.75 # step-length reduction factor
+
+f <- function(x) sin(x)
+g <- function(x) cos(x)
+
+plot(f, -5, 5)
+x_k <- 0
+tol <- 1e-4
+k_max <- 90
+x_solution <- steepest_descent(f, g, x_k, a, c, r, tol, k_max)
+x_solution
+```
+
 * Make sure that the implementation supports the different step sizes we have discussed (fixed, backtracking and satisfying strong Wolfe conditions)
     + Discuss in the group how this can be done in practise (including identifing problems that you don't know how to solve technically)
 * Discuss when to terminate the algorithm
