@@ -52,9 +52,9 @@ v2 <- df.FD(x, 2*h)
 v4 <- df.FD(x, 4*h)
 order_ratio_FD <- (v2 - v4)/(v1 - v2) ;order_ratio_FD
 
-v1 <- df.CD(x, h)
-v2 <- df.CD(x, 2*h)
-v4 <- df.CD(x, 4*h)
+v1 <- df.CD(x, h^2)
+v2 <- df.CD(x, 2*h^2)
+v4 <- df.CD(x, 4*h^2)
 order_ratio_CD <- (v2 - v4)/(v1 - v2) ;order_ratio_CD
 ```
 
