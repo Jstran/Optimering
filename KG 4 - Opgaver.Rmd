@@ -39,14 +39,23 @@ for (i in 1:16){
 plot(log10(h),log10(abs(cd_candidate - df_exact)) , type = "l" , col = "blue")
 lines(log10(h),log10(abs(fd_candidate - df_exact)) , col = "red")
 
-abline(v = log10((sqrt(eps))), col = "yellow")
-abline(h = log10((sqrt(eps))), col = "yellow")
+abline(v = log10(sqrt(eps)), col = "yellow")
+abline(h = log10(sqrt(eps)), col = "yellow")
 ```
 
 Calculate the order ratio for CD and compare to that of FD.
 
 ```{r}
+h <- 1e-3
+v1 <- df.FD(x, h)
+v2 <- df.FD(x, 2*h)
+v4 <- df.FD(x, 4*h)
+order_ratio_FD <- (v2 - v4)/(v1 - v2) ;order_ratio_FD
 
+v1 <- df.CD(x, h)
+v2 <- df.CD(x, 2*h)
+v4 <- df.CD(x, 4*h)
+order_ratio_CD <- (v2 - v4)/(v1 - v2) ;order_ratio_CD
 ```
 
 Try out Richardson Extrapolation for CD and compare to that of FD.
