@@ -11,18 +11,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In the slides, Forward-Difference (`df.FD`) was compared to exact differentiation (`df.exact`) for
 
+Reconstruct (implement) the example and the results in the slides yourself.
+
 ```{r}
 f = function(x) cos(sin(x)*cos(x))
+df.exact = function(x) -cos(2*x)*sin(sin(x)*cos(x))
+df.FD = function(x, h) (f(x + h) - f(x))/h
+df.CD = function(x, h) (f(x+h) - f(x-h))/(2*h)
+x <- pi/3
+df_exact <- df.exact(x) ; df_exact
 ```
-
-Reconstruct (implement) the example and the results in the slides yourself.
 
 Include Central-Difference calculations in both trace and plots.
 Remember to also add CD reference lines:
 
 ```{r}
-abline(v = log10((eps^(1/3))), col = "blue")
-abline(h = log10((eps^(2/3))), col = "blue")
+eps <- .Machine$double.eps
+cd_candidate <- fd_candidate <- h <- numeric(16)
+
+
+for (i in 1:16){
+  h[i] <- 10^(-i)
+  fd_candidate[i] <- df.FD(x,h[i])
+  cd_candidate[i] <- df.CD(x,h[i])}
+
+# Plotter både CD = rød og FD = blå i samme plot.
+plot(log10(h),log10(abs(cd_candidate - df_exact)) , type = "l" , col = "blue")
+lines(log10(h),log10(abs(fd_candidate - df_exact)) , col = "red")
+
+abline(v = log10((sqrt(eps))), col = "yellow")
+abline(h = log10((sqrt(eps))), col = "yellow")
 ```
 
 Calculate the order ratio for CD and compare to that of FD.
